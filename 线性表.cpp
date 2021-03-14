@@ -19,11 +19,11 @@ typedef struct
 	int listsize;
 }SqList;
 
-void InitList(SqList* L) //构造一个空的线性表
+void InitList(SqList &L) //构造一个空的线性表
 {
-	L->elem = (ElemType*)malloc(INIT_SIZE * sizeof(ElemType));
-	L->length = 0;
-	L->listsize = INIT_SIZE;
+	L.elem = (ElemType*)malloc(INIT_SIZE * sizeof(ElemType));
+	L.length = 0;
+	L.listsize = INIT_SIZE;
 }
 
 int Getlen(SqList L) //求表L的长度
@@ -89,21 +89,57 @@ void GetElem(SqList L, int i, ElemType& e)  //用e返回第i个结点的值
 	e = L.elem[i - 1];
 }
 
+void MergeList(SqList La, SqList Lb, SqList& Lc)  //非递减有序排列
+{
+	InitList(Lc);
+	int i =1, j = 1,k=0;
+	int La_len = Getlen(La);
+	int Lb_len = Getlen(Lb);
+	while ((i <= La_len) && (j <= Lb_len))
+	{
+		ElemType a = GetElem(La, i);
+		ElemType b = GetElem(Lb, j);
+		if (a <= b)
+		{
+			ListInsert(Lc, ++k, a);
+			++i;
+		}
+		else
+		{
+			ListInsert(Lc, ++k, b);
+			++j;
+		}
+	}
+	while (i <= La_len) {
+		ElemType a = GetElem(La, i++);
+		ListInsert(Lc, ++k, a);
+	}
+	while (j <= Lb_len) {
+		ElemType b = GetElem(Lb, j++);
+		ListInsert(Lc, ++k, b);
+	}
+}
+
 int main()
 {
-	SqList a;
-	ElemType e =0 ;
-	InitList(&a);
-	for (int i = 0;i < 10;i++) a.elem[i] = i;
-	a.length = 10;
-	ListInsert(a, 1, 1);
-	for(int i=0;i<a.length;i++)
-	    printf("%d\n", *(a.elem+i));
-
-	ListDelete(a, 2, e);
-	printf("删除的元素是%d\n", e);
+	SqList a,b,c;
+	InitList(a);
+	InitList(b);
+	for (int i = 0;i < 10;i++)
+		a.elem[i] = i;
+	for (int i = 0;i <10;i++)
+		b.elem[i] = i;
+	a.length = b.length = 10;
+	MergeList(a, b, c);
 
 	for (int i = 0;i < a.length;i++)
 		printf("%d\n", *(a.elem + i));
+	printf("aaaaaaaaaaaaaaaaaaaaa\n");
+	for (int i = 0;i < b.length;i++)
+		printf("%d\n", *(b.elem + i));
+
+	printf("aaaaaaaaaaaaaaaaaaaaa\n");
+	for(int i = 0;i < c.length;i++)
+		printf("%d\n", *(c.elem + i));
 
 }
