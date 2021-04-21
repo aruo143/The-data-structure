@@ -22,7 +22,7 @@ bool GetElem(LinkList L, int i, ElemType& e) //查找第i个元素，并赋值�
 	return true;
 }
 
-void ListInsert(LinkList& L, int i, ElemType e)
+void ListInsert(LinkList& L, int i, ElemType e)//在第i个位置插入元素e
 {
 	LNode* p = L;
 	int j = 0;
@@ -38,7 +38,7 @@ void ListInsert(LinkList& L, int i, ElemType e)
 	p->next = s;
 }
 
-void ListDelete(LinkList& L, int i, ElemType& e)
+void ListDelete(LinkList& L, int i, ElemType& e)//删除第i个元素
 {
 	LNode* p = L;
 	int j = 0;
@@ -54,7 +54,31 @@ void ListDelete(LinkList& L, int i, ElemType& e)
 	free(q);
 }
 
+void display(LinkList L)//输出所有的值
+{
+	LNode* p = L;
+	while (p->next != NULL)
+	{
+		p = p->next;
+		printf("%d ", p->data);
+	}
+}
+
+void InitList(LinkList& L)
+{
+	LNode* s = new LNode;
+	L = s;
+	s->next = NULL;
+}
+
 int main()
 {
+	LinkList L;
+	InitList(L);
+	ListInsert(L, 1, 0);
+	ListInsert(L, 2, 1);
+	ListInsert(L, 1, 2);
+	ListInsert(L, 1, 3);
+	display(L);
 
 }
