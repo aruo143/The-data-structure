@@ -33,6 +33,16 @@ bool EnQueue(SqQueue& Q, int e)
 	return true;
 }
 
+//输出元素
+void display(SqQueue Q)
+{
+	if(Q.front == Q.rear) return;
+	while(Q.front != Q.rear)
+	{
+		printf("%d",Q.base[Q.front++]);
+	}
+}
+
 //删除队头元素
 bool DeQueue(SqQueue& Q, int& e)
 {
@@ -44,5 +54,12 @@ bool DeQueue(SqQueue& Q, int& e)
 
 int main()
 {
-
+	SqQueue q;
+	InitQueue(q);
+	EnQueue(q,1);
+	EnQueue(q,2);
+	EnQueue(q,3);
+	EnQueue(q,4);
+	display(q);
+	system("pause");
 }
